@@ -5,7 +5,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { getEventos, crearEvento, actualizarEvento, borrarEvento } = require('../controllers/events');
+const { getEventos, getEventosAll, crearEvento, actualizarEvento, borrarEvento } = require('../controllers/events');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { isDate } = require('../helpers/isDate');
 
@@ -13,6 +13,11 @@ const router = Router();
 
 // Cualquier ruta definida despues de esta instrucción ejecutará implicitamente el middleware validarJWT
 router.use(validarJWT);
+
+router.get(
+    '/all',
+    getEventosAll
+);
 
 router.get(
     '/',

@@ -2,6 +2,14 @@ const { response } = require('express');
 const Evento = require('../models/Evento');
 
 const getEventos = async (req, res = response) => {
+    const eventos = await Evento.find({ user: req.uid }).populate('user', 'name _id');
+    return res.status(200).json({
+        ok: true,
+        events: eventos
+    });
+}
+
+const getEventosAll = async (req, res = response) => {
     const eventos = await Evento.find().populate('user', 'name _id');
     return res.status(200).json({
         ok: true,
@@ -117,6 +125,7 @@ const borrarEvento = async (req, res = response) => {
 
 module.exports = {
     getEventos,
+    getEventosAll,
     crearEvento,
     actualizarEvento,
     borrarEvento
