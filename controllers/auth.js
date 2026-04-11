@@ -53,7 +53,7 @@ const loginUsuario = async (req, res = response) => {
     try {
 
         const usuario = await Usuario.findOne({ email });
-
+        
         if (!usuario) {
             return res.status(400).json({
                 ok: false,
@@ -83,7 +83,6 @@ const loginUsuario = async (req, res = response) => {
 
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Por favor hable con el administrador'
@@ -106,11 +105,34 @@ const revalidarToken = async (req, res = response) => {
     })
 }
 
-
+const getUser = async (req, res = response) => {
+    const { uid, name } = req;
+    // Generar JWT
+    const token = await generarJWT(uid, name);
+    try {
+        const usuario = await Usuario.findById(uid); 
+        return res.status(200).json({
+            ok: true,
+            user: {
+                name,
+                uid,
+                email: usuario.email
+            },
+            token
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Por favor hable con el administrador'
+        });       
+    }
+}
 
 
 module.exports = {
     crearUsuario,
     loginUsuario,
-    revalidarToken
+    revalidarToken,
+    getUser
 }
