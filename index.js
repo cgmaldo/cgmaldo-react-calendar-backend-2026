@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const { dbConnection } = require('./database/config')
 
@@ -27,10 +28,10 @@ app.use('/api/auth', require('./routes/auth'))
 // Rutas relacionadas con el CRUD eventos
 app.use('/api/events', require('./routes/events'))
 
-// Resto de rutas
-// app.use('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public/index.html'))
-// })
+// Las rutas empleadas en el frontend que no esten definidas aqui, seran redirigidas a public/index.html
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'))
+})
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${process.env.PORT}`)
