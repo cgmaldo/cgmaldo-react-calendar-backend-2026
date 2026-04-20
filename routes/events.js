@@ -29,7 +29,7 @@ router.post(
     [
         check('title', 'title es obligatorio').not().isEmpty(),
         check('start', 'Start es obligatorio').custom(isDate),
-        check('end', 'End es obligatorio').isNumeric().not().isEmpty(),
+        check('end', 'End es obligatorio').custom(isDate),
         validarCampos,
     ],
     crearEvento
@@ -40,7 +40,7 @@ router.put(
     [
         check('title', 'title es obligatorio').not().isEmpty(),
         check('start', 'Start es obligatorio').custom(isDate),
-        check('end', 'End es obligatorio').isNumeric().not().isEmpty(),
+        check('end', 'End es obligatorio').custom(isDate),
         validarCampos,
     ],
     actualizarEvento
